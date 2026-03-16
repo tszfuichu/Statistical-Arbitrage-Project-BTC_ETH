@@ -65,7 +65,5 @@ if __name__ == "__main__":
 
     print('Data fetching complete')
 
-df = pd.read_parquet(f'data/BTC_USDT.parquet')
-print(df.head())
-print(df.tail())
+
 
