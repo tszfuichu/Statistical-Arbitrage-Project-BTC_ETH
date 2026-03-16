@@ -1,44 +1,54 @@
+import logging
+
 import pandas as pd
 from datetime import datetime, timedelta, timezone
 from statsmodels.tsa.stattools import coint
 import statsmodels.api as sm
 import numpy as np
+import pickle
+import os
 
 # 1. Import the function from the Data folder
 from Data.fetch_data import fetch_data
+from src.config import CONFIG
+
 
 # 2. Take the last 720 hours live data and calculate the current Z-score
 def cal_live_zscore(symbol1, symbol2):
     """
     Fetches the last 720 hours of data and calculates the current Z-score.
     """
-    # Calculate the start_time and end_time (720 hours)
+
+    # Calculate the start_time and end_time
     end_time = datetime.now(timezone.utc)
-    start_time = end_time-timedelta(hours=720)
+    start_time = end_time-timedelta(hours = CONFIG['total_hr_candle'])
 
     end_time = end_time.strftime('%Y-%m-%d %H:%M:%S')
     start_time = start_time.strftime('%Y-%m-%d %H:%M:%S')
 
-    print(f"Fetching live data from {start_time} to {end_time}...")
+    logging.info(f"Fetching live data from {start_time} to {end_time}...")
 
     # Fetch the data
-    df1 = fetch_data(symbol1, timeframe= '1h', total_candle= 720)
-    df2 = fetch_data(symbol2, timeframe= '1h', total_candle= 720)
+    df1 = fetch_data(symbol1, timeframe= '1h', total_candle= CONFIG['total_hr_candle'])
+    df2 = fetch_data(symbol2, timeframe= '1h', total_candle= CONFIG['total_hr_candle'])
 
     # 2. Concat the two file to a dataframe(Pandas will automatically merge two data by timestamp)
     df = pd.concat([df1['close'], df2['close']], axis=1, keys=['btc', 'eth']).dropna()
+    if len(df) < CONFIG['total_hr_candle']:
+        raise ValueError(f"Insufficient data: only {len(df)} candles fetched, need {CONFIG['total_hr_candle']}. Skipping cycle.")
 
     # 3. Perform the Cointegration Test (Engle-Granger test)
     score, p_value, _ = coint(df['btc'], df['eth'])
 
-    # Print the p_value in different situation
+    # Print the p_value in different situation(when p_value > 0.05 return 0,0,0,0 to avoid trading with non-cointegrated pair)
     if p_value < 0.05:
-        print(f'Cointegration P-value: {p_value:.4f}. The pair is cointegrated! ')
+        logging.info(f'Cointegration P-value: {p_value:.4f}. The pair is cointegrated! ')
     else:
         if p_value > 0.05:
-            print(f'Cointegration P-value: {p_value:.4f}. Cointegration P-value is too high')
+            logging.info(f'Cointegration P-value: {p_value:.4f}. Cointegration P-value is too high')
+            return 0, 0, 0, 0
         else:
-            print('Unexpected Error')
+            logging.info('Unexpected Error')
 
     # 4. Calculate the Hedge Ratio by using Ordinary Least Squares (OLS) Regression (Y = MX + C)
     # BTC: independent variable(X) & ETH: dependent variable(Y)
@@ -70,9 +80,9 @@ def cal_live_zscore(symbol1, symbol2):
     spread_std = df['spread'].std()
 
     df['z_score'] = (df['spread'] - spread_mean) / spread_std
-    print(f'Live z score = {df['z_score'].iloc[-1]}')
+    print(f"Live z score = {df['z_score'].iloc[-1]}")
 
-    return 3, beta, df['btc'].iloc[-1], df['eth'].iloc[-1]
+    return df['z_score'].iloc[-1], beta, df['btc'].iloc[-1], df['eth'].iloc[-1]
 
 
 if __name__ == "__main__":
