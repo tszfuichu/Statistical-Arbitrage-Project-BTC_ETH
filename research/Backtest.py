@@ -1,23 +1,29 @@
-from copyreg import pickle
+import os
+import sys
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(project_root)
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle
+import cointegration_test
+from src.config import CONFIG
 
 #The Trading rule:
 # Long spread (z_score < -2): We need to Long 'ETH' & Short 'BTC'
 # Short spread (z_score > +2): We need to Short 'ETH' & Long 'BTC'
 # Exit Trade: When Z-Score crosses back to 0 (mean reversion is complete)
 
-# 1. Load z-score parquet files and beta value
-df = pd.read_parquet('../Data/data/z-score.parquet')
-beta = pickle.load(open('../Data/data/beta.pkl', 'rb'))
+# 1. Load df and beta value
+data = cointegration_test.test()
+df = data[0]
+beta = data[1]
 
 # 2. Create a column that define our current position(0: no trade, 1: Long Spread, -1: Short Spread)
 df['position'] = 0
 current_position = 0
-z_range = [2,-2]
+z_range = [CONFIG['z_entry_threshold'],-CONFIG['z_entry_threshold']]
 # 3. Loop through the data to generate trading signals
 for i in range(len(df)):
     z = df['z_score'].iloc[i]
