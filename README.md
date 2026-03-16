@@ -51,13 +51,13 @@ You can easily customize the bot's behavior without changing the core logic by m
 
 * **Risk & Capital Management:**
 
- * `account_balance`: The base capital used for calculating position sizes (e.g., `10000.0`).
- * `risk_pct`: The percentage of the account balance to risk on a single pairs trade (e.g., `0.05` means 5% risk).
+  * `account_balance`: The base capital used for calculating position sizes (e.g., `10000.0`).
+  * `risk_pct`: The percentage of the account balance to risk on a single pairs trade (e.g., `0.05` means 5% risk).
  
 * **Z-Score Thresholds (Strategy Logic):**
 
- * `z_entry_threshold`: The Z-score level at which the bot opens a trade (e.g., `2.0`). A higher number means fewer, but potentially safer, trades.
- * `z_stop_threshold`: The extreme Z-score level at which the bot cuts losses to protect capital (e.g., `4.0`).
+  * `z_entry_threshold`: The Z-score level at which the bot opens a trade (e.g., `2.0`). A higher number means fewer, but potentially safer, trades.
+  * `z_stop_threshold`: The extreme Z-score level at which the bot cuts losses to protect capital (e.g., `4.0`).
 
 ## 🚀 Usage
    Once your .env is set up and your config.py is tuned to your liking, start the trading bot by running:
