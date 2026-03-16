@@ -31,14 +31,17 @@ The bot continuously monitors the price spread between BTC and ETH, calculates t
 
 2. **Install dependencies:**
    Ensure you have Python 3.8+ installed, then run:
+   ```bash
    pip install pandas numpy statsmodels ccxt python-dotenv
    
-3. **Set up Environment Variables:**
+4. **Set up Environment Variables:**
    Modify the .env file with your API keys
+   ```bash
    APIKEY=your_api_key
    SECRETKEY=your_secret_key
 
-4. **Start the Trading bot**
+6. **Start the Trading bot**
+   ```bash
    python src/main.py
 
 ## ⚠️ Disclaimer
