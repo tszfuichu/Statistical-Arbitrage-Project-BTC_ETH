@@ -21,7 +21,7 @@ The bot continuously monitors the price spread between BTC and ETH, calculates t
 * `src/execution.py`: Handles the actual API connection to Binance Testnet via `ccxt` to open and close futures contracts.
 * `src/config.py`: Centralized configuration file for easy tweaking of thresholds, intervals, and risk parameters.
 * `Data/fetch_data.py`: Helper script to fetch OHLCV candle data from the exchange (dependency for `strategy.py`).
-* `venv/.env`: It is a non-public file used to store the trading platform's API keys.
+* `.env`: It is a non-public file used to store the trading platform's API keys.
 
 ## 🛠️ Prerequisites
 Before running the bot, ensure you have Python 3.8+ installed. You will also need the following Python libraries:
