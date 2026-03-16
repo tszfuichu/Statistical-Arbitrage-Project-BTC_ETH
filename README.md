@@ -23,8 +23,24 @@ The bot continuously monitors the price spread between BTC and ETH, calculates t
 * `Data/fetch_data.py`: Helper script to fetch OHLCV candle data from the exchange (dependency for `strategy.py`).
 * `.env`: It is a non-public file used to store the trading platform's API keys.
 
-## 🛠️ Prerequisites
-Before running the bot, ensure you have Python 3.8+ installed. You will also need the following Python libraries:
-```bash
-pip install pandas numpy statsmodels ccxt python-dotenv
+## 🛠️ Prerequisites & Installation
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/tszfuichu/Statistical-Arbitrage-Project-BTC_ETH.git
+   cd Statistical-Arbitrage-Project-BTC_ETH
+
+2. **Install dependencies:**
+   Ensure you have Python 3.8+ installed, then run:
+   pip install pandas numpy statsmodels ccxt python-dotenv
+   
+3. **Set up Environment Variables:**
+   Modify the .env file with your API keys
+   APIKEY=your_api_key
+   SECRETKEY=your_secret_key
+
+4. **Start the Trading bot**
+   python src/main.py
+
+## ⚠️ Disclaimer
+This software is for educational purposes only. Do not risk money which you are afraid to lose. USE THE SOFTWARE AT YOUR OWN RISK. The authors and all affiliates assume no responsibility for your trading results. Always test strategies thoroughly on a Testnet before deploying real capital.
 
