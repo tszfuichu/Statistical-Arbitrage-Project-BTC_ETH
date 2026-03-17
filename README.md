@@ -76,8 +76,7 @@ I recently ran a backtest for the Pairs Trading Strategy over a one-month period
 
 ### Performance Chart
 
-![Pairs Trading Strategy Performance - 10x Leverage](path/to/your/chart-image.png)
-*(Note: Replace `path/to/your/chart-image.png` with the actual file path of your saved chart in your repository)*
+![Pairs Trading Strategy Performance](images/Pair_Trading_Backtest.png)
 
 ### Performance Summary
 * **Initial Capital:** 1.0 (Base)
