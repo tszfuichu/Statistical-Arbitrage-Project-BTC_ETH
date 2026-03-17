@@ -65,6 +65,26 @@ Once your .env is set up and your config.py is tuned to your liking, start the t
   python src/main.py
   ```
 
+## Backtest Results
+
+I recently ran a backtest for the Pairs Trading Strategy over a one-month period (mid-February 2026 to mid-March 2026) using updated parameters to optimize for higher volatility captures. 
+
+### Strategy Parameters
+* **Z_entry Threshold:** `1.95`
+* **Z_stop_threshold:** `4.0`
+* **Leverage:** `10x`
+
+### Performance Chart
+
+![Pairs Trading Strategy Performance - 10x Leverage](path/to/your/chart-image.png)
+*(Note: Replace `path/to/your/chart-image.png` with the actual file path of your saved chart in your repository)*
+
+### Performance Summary
+* **Initial Capital:** 1.0 (Base)
+* **Peak Cumulative Return:** ~1.36 (+36% at peak)
+* **Final Cumulative Return:** ~1.16 (+16% at period end)
+* **Observations:** The strategy experienced periods of flat exposure interspersed with high-volatility trading windows. The 10x leverage allowed the strategy to quickly capitalize on mean-reverting moves, peaking at a 36% gain in early March before giving back some profits and stabilizing around a 16% net gain by mid-March.
+
 ## ⚠️ Disclaimer
 This software is for educational purposes only. Do not risk money which you are afraid to lose. USE THE SOFTWARE AT YOUR OWN RISK. The authors and all affiliates assume no responsibility for your trading results. Always test strategies thoroughly on a Testnet before deploying real capital.
 
